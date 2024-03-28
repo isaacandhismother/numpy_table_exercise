@@ -65,14 +65,12 @@ class Table:
         if len(mark_list) != 0:
             return np.median(mark_list)
 
-
-if __name__ == '__main__':
-    def get_highest_mark_from_median(table: Table):
+    def get_highest_mark_from_median(self):
         students_medians = {}
-        for student_info in table:
+        for student_info in self.table:
             if isinstance(student_info[0], str):
                 student_name = student_info[0]
-                median = table.get_median_mark(student_name)
+                median = self.get_median_mark(student_name)
                 students_medians[student_name] = median
         medians = list(students_medians.values())
         max_median_index = np.argmax(medians)
@@ -80,24 +78,24 @@ if __name__ == '__main__':
 
         return max_median_student, medians[max_median_index]
 
-    def get_subject_mark_more_than_median(table: Table, subject: str):
+    def get_subject_mark_more_than_median(self, subject: str):
         result = {}
-        for student_info in table:
+        for student_info in self.table:
             if isinstance(student_info[0], str):
                 student_name = student_info[0]
-                median_mark = table.get_median_mark(student_name)
-                subject_mark = table.get_mark(student_name, subject)
+                median_mark = self.get_median_mark(student_name)
+                subject_mark = self.get_mark(student_name, subject)
                 if subject_mark > median_mark:
                     result[student_name] = (subject_mark, median_mark)
 
         return result
 
-    def get_highest_mark_in_subject(table: Table, subject):
+    def get_highest_mark_in_subject(self, subject):
         mark_list = {}
-        for student_info in table:
+        for student_info in self.table:
             if isinstance(student_info[0], str):
                 student_name = student_info[0]
-                mark = table.get_mark(student_name, subject)
+                mark = self.get_mark(student_name, subject)
                 mark_list[student_name] = mark
         subject_marks = list(mark_list.values())
         highest_mark_index = np.argmax(subject_marks)
@@ -105,12 +103,12 @@ if __name__ == '__main__':
 
         return highest_mark_student, subject_marks[highest_mark_index]
 
-    def get_lowest_mark_in_subject(table: Table, subject):
+    def get_lowest_mark_in_subject(self, subject):
         mark_list = {}
-        for student_info in table:
+        for student_info in self.table:
             if isinstance(student_info[0], str):
                 student_name = student_info[0]
-                mark = table.get_mark(student_name, subject)
+                mark = self.get_mark(student_name, subject)
                 mark_list[student_name] = mark
         subject_marks = list(mark_list.values())
         highest_mark_index = np.argmin(subject_marks)
@@ -118,6 +116,8 @@ if __name__ == '__main__':
 
         return highest_mark_student, subject_marks[highest_mark_index]
 
+
+if __name__ == '__main__':
     student_names = ['ვენერა', 'თინა', 'თეა', 'სოსო', 'მირანდა', 'ჟენია', 'ტატიანა',
                      'ედუარდ', 'კლარა', 'სიმონ', 'ანზორ', 'სოფია', 'სოსო', 'ნელი',
                      'ბონდო', 'ედუარდ', 'სონია', 'არჩილ', 'მარიამ', 'სოფია', 'ემა',
@@ -160,14 +160,14 @@ if __name__ == '__main__':
     table1()
 
     # Printing all necessary information
-    highest_median_mark = get_highest_mark_from_median(table1)
+    highest_median_mark = table1.get_highest_mark_from_median()
     print(f'Student that has highest median mark: {highest_median_mark}')
 
-    highest_mark_in_math = get_highest_mark_in_subject(table1, 'Math')
+    highest_mark_in_math = table1.get_highest_mark_in_subject('Math')
     print(f'Student with the highest mark in math: {highest_mark_in_math}')
 
-    lowest_mark_in_math = get_lowest_mark_in_subject(table1, 'Math')
+    lowest_mark_in_math = table1.get_lowest_mark_in_subject('Math')
     print(f'Student with the lowest mark in math:{lowest_mark_in_math}')
 
-    subject_mark_more_than_median = get_subject_mark_more_than_median(table1, 'English')
+    subject_mark_more_than_median = table1.get_subject_mark_more_than_median('English')
     print(f'Students with a subject mark more than median: {subject_mark_more_than_median}')
